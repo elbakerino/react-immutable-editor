@@ -5,7 +5,7 @@ const IcCode = (props) => <svg xmlns="http://www.w3.org/2000/svg" width={props.s
     <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
 </svg>;
 
-const ButtonInputLabel = ({theme, type, parentKey, getVal, onChange}) => {
+const ButtonInputLabel = ({theme, type, parentKey, getVal, onChange, invertTheme}) => {
     const [showType, setShow] = React.useState(false);
     const spanRef = React.useRef(null);
 
@@ -46,9 +46,10 @@ const ButtonInputLabel = ({theme, type, parentKey, getVal, onChange}) => {
                     wordBreak: 'keep-all',
                     left: '100%',
                     top: 'Boolean' === type ? -3 : -4,
-                    background: theme.base00,
-                    border: '1px solid ' + (theme.type === 'dark' ? theme.base06 : theme.base02),
-                    color: theme.base0B,
+                    background: (invertTheme ? theme.base07 : theme.base00),
+                    // type is here to be material-ui dark-style compatible (which works other then inverting colors)
+                    border: '1px solid ' + (theme.type === 'dark' || !invertTheme ? theme.base06 : theme.base02),
+                    color: (invertTheme ? theme.base03 : theme.base0B),
                     padding: '2px 6px',
                 }}
                 // hiding on ESC
@@ -113,7 +114,7 @@ const Editor = ({theme, invertTheme = false, data, onChange, getVal}) => {
                 data={data}
                 valueRenderer={raw => <ButtonValue raw={raw}/>}
                 labelRenderer={(parentKeys, type,) => {
-                    return <ButtonInputLabel type={type} parentKey={parentKeys} onChange={onChange} getVal={getVal} theme={theme}/>
+                    return <ButtonInputLabel type={type} parentKey={parentKeys} onChange={onChange} getVal={getVal} theme={theme} invertTheme={invertTheme}/>
                 }}
                 theme={theme}
                 invertTheme={invertTheme}/>}
