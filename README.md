@@ -11,7 +11,31 @@ See it in action:
 3. Start server: `npm start`
 4. Visit shown URL, default [localhost:3000](http://localhost:3000)
 
-For usage simply `npm i --save-dev react-immutable-editor`, see [demo file](https://bitbucket.org/bemit_eu/react-immutable-editor/src/master/demo/src/index.js) for the React example.
+For usage simply `npm i --save-dev react-immutable-editor`
+
+```js
+import React from 'react';
+import {ImmutableEditor, themeMaterial} from 'react-immutable-editor';
+import {OrderedMap} from "immutable";
+
+/**
+ * Get your data in an ordered map
+ * @var {OrderedMap} demoData
+ */
+
+const ThemedImmutableEditor = (props) => <ImmutableEditor
+    theme={themeMaterial}
+    data={props.data}
+    invertTheme={false}
+    // keys is an array that can be used for .getIn and .setIn
+    // val is the data that was changed
+    onChange={(keys, val) => { /* update your demoData */ props.setData(keys, val) }}
+    getVal={keys => { /* get your demo data */ return props.getVal(keys); }}/>
+
+export {ThemedImmutableEditor}
+```
+
+See [demo file](https://bitbucket.org/bemit_eu/react-immutable-editor/src/master/demo/src/index.js) for the full React example.
 
 ## License
 

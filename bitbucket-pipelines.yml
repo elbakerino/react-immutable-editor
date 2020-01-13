@@ -23,6 +23,8 @@ public: &publish
   step:
     name: Publish
     script:
+      - rm immutable-js.gif
+      - rm immutable-js.jpg
       - npmPublish.sh
 
 pipelines:

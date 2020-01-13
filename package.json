@@ -18,10 +18,11 @@
     "test:coverage": "nwb test-react --coverage",
     "test:watch": "nwb test-react --server"
   },
-  "dependencies": {},
-  "peerDependencies": {
-    "react": "16.x",
+  "dependencies": {
     "react-json-tree": "^0.11.x"
+  },
+  "peerDependencies": {
+    "react": "16.x"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
