@@ -32,7 +32,7 @@ const Demo = () => {
     const [data, setData] = React.useState(demoData);
 
     return <div style={{
-        height: '100vh', overflow: 'auto', padding: 24,
+        height: '100vh', padding: 24,
         background: data.get('darkTheme') ? themeMaterial.base00 : themeMaterial.base06
     }}>
 
@@ -57,7 +57,7 @@ const Demo = () => {
 
         <ImmutableEditor
             theme={themeMaterial}
-            data={demoData}
+            data={data}
             invertTheme={!data.get('darkTheme')}
             onChange={(keys, val) => {
                 if(data.get('logChange')) {

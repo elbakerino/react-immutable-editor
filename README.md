@@ -2,6 +2,8 @@
 
 An editor for [immutable-js](https://immutable-js.github.io/immutable-js/docs/#/") maps in React.
 
+![picture](immutable-js.jpg)
+
 See it in action:
 
 1. Download git repo: `git clone https://bitbucket.org/bemit_eu/react-immutable-editor.git`
@@ -10,6 +12,8 @@ See it in action:
 4. Visit shown URL, default [localhost:3000](http://localhost:3000)
 
 For usage simply `npm i --save-dev react-immutable-editor`, see [demo file](https://bitbucket.org/bemit_eu/react-immutable-editor/src/master/demo/src/index.js) for the React example.
+
+![video](immutable-js.mp4)
 
 ## License
 
