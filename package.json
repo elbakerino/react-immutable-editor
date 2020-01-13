@@ -1,0 +1,45 @@
+{
+  "name": "react-immutable-editor",
+  "version": "0.5.0",
+  "description": "dev-tool: editor for immutable maps in react",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "lib"
+  ],
+  "scripts": {
+    "build": "npm run lint && nwb build-react-component",
+    "clean": "nwb clean-module && nwb clean-demo",
+    "prepublishOnly": "npm run build",
+    "start": "nwb serve-react-demo && npm run lint",
+    "test": "nwb test-react",
+    "lint": "eslint src demo tests",
+    "test:coverage": "nwb test-react --coverage",
+    "test:watch": "nwb test-react --server"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "16.x"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-react": "^7.17.0",
+    "immutable": "^4.0.0-rc.12",
+    "nwb": "0.23.x",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-json-tree": "^0.11.2"
+  },
+  "author": "",
+  "homepage": "",
+  "license": "MIT",
+  "repository": "",
+  "keywords": [
+    "react-component",
+    "immutablejs",
+    "immutable editor"
+  ]
+}

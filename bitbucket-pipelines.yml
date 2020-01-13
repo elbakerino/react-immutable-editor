@@ -1,0 +1,39 @@
+image: bemiteu/webbuild:release-0.3
+
+options:
+  max-time: 10
+
+clone:
+  depth: 1
+
+build: &build
+  step:
+    name: Build
+    caches:
+      - node
+    script:
+      - npm install
+      - npm build
+    artifacts:
+      - demo/dist
+      - es
+      - lib
+
+public: &publish
+  step:
+    name: Publish
+    script:
+      - npmPublish.sh
+
+pipelines:
+  default:
+    - <<: *build
+  tags:
+    '*.*.*':
+      - <<: *build
+      - <<: *publish
+  branches:
+    master:
+      - <<: *build
+    develop:
+      - <<: *build
