@@ -1,16 +1,26 @@
-# react-immutable-editor
+# React Immutable Editor
 
-[![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+An editor for [immutable-js](https://immutable-js.github.io/immutable-js/docs/#/") maps in React.
 
-Describe react-immutable-editor here.
+See it in action:
 
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
+1. Download git repo: `git clone https://bitbucket.org/bemit_eu/react-immutable-editor.git`
+2. Install demo setup: `npm i`
+3. Start server: `npm start`
+4. Visit shown URL, default [localhost:3000](http://localhost:3000)
 
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
+For usage simply `npm i --save-dev react-immutable-editor`, see [demo file](https://bitbucket.org/bemit_eu/react-immutable-editor/src/master/demo/src/index.js) for the React example.
 
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+## License
+
+This project is free software distributed under the **MIT License**.
+
+See: [LICENSE](LICENSE).
+
+### Contributors
+
+By committing your code to the code repository you agree to release the code under the MIT License attached to the repository.
+
+***
+
+Created by [Michael Becker](https://mlbr.xyz)

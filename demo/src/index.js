@@ -47,6 +47,12 @@ const Demo = () => {
             }}>
                 An editor for <a style={{color: data.get('darkTheme') ? themeMaterial.base04 : themeMaterial.base0D}} href="https://immutable-js.github.io/immutable-js/docs/#/" target={'_blank'}>immutable</a> maps in React. Check: <b>hideIntro</b>, <b>hideIntro</b>, <b>darkTheme</b>.
             </p>
+            <p style={{
+                color: data.get('darkTheme') ? themeMaterial.base0D : themeMaterial.base00,
+                fontFamily: 'sans-serif'
+            }}>
+                See <a style={{color: data.get('darkTheme') ? themeMaterial.base04 : themeMaterial.base0D}} href="https://bitbucket.org/bemit_eu/react-immutable-editor/src/master/demo/src/index.js" target={'_blank'}>demo file</a> for the code.
+            </p>
         </React.Fragment>}
 
         <ImmutableEditor
