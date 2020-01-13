@@ -15,9 +15,9 @@ build: &build
       - npm install
       - npm run build
     artifacts:
-      - demo/dist
-      - es
-      - lib
+      - demo/dist/**
+      - es/**
+      - lib/**
 
 public: &publish
   step:
