@@ -52,10 +52,12 @@ const ButtonInputLabel = ({theme, type, parentKey, getVal, onChange, invertTheme
                     color: (invertTheme ? theme.base03 : theme.base0B),
                     padding: '2px 6px',
                 }}
-                // hiding on ESC
-                onKeyUp={(e) => (e.which === 27) ? ((spanRef.current.parentNode.parentNode.children[1] ?
-                    spanRef.current.parentNode.parentNode.children[1].style.opacity = 1 : undefined)
-                    && setShow(false)) : undefined}
+                // hiding on ESC or ENTER
+                onKeyUp={(e) => e.which === 27 || e.which === 13 ?
+                    ((spanRef.current.parentNode.parentNode.children[1] ?
+                        spanRef.current.parentNode.parentNode.children[1].style.opacity = 1 : undefined)
+                        && setShow(false)) :
+                    undefined}
                 onChange={(e) => {
                     if('Number' === type) {
                         onChange(relKeys, e.target.value * 1)
@@ -101,15 +103,16 @@ const Editor = ({theme, invertTheme = false, data, onChange, getVal}) => {
             <IcCode style={{display: 'block'}} fill={theme.base0D} size={16}/>
         </button>
         {showRaw ?
-            data && typeof data.toJS === 'function' ? <code style={{background: 'transparent', display: 'block', border: 0, width: '100%', color: theme.base0D}}>
-    <pre
-        contentEditable
-        suppressContentEditableWarning
-        // only allow copy of content with `ctrl+a` but prohibit any change
-        onCut={(e) => e.preventDefault()}
-        onKeyDown={(e) => e.ctrlKey && (e.which === 65 || e.which === 67) ? undefined : e.preventDefault()}
-    >{JSON.stringify(data.toJS(), null, 2)}</pre>
-            </code> : 'unsupported-data'
+            data && typeof data.toJS === 'function' ?
+                <code style={{background: 'transparent', display: 'block', border: 0, width: '100%', color: theme.base0D}}>
+                    <pre
+                        contentEditable
+                        suppressContentEditableWarning
+                        // only allow copy of content with `ctrl+a` but prohibit any change
+                        onCut={(e) => e.preventDefault()}
+                        onKeyDown={(e) => e.ctrlKey && (e.which === 65 || e.which === 67) ? undefined : e.preventDefault()}
+                    >{JSON.stringify(data.toJS(), null, 2)}</pre>
+                </code> : 'unsupported-data'
             : <JSONTree
                 data={data}
                 valueRenderer={raw => <ButtonValue raw={raw}/>}
