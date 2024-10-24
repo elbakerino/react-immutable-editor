@@ -1,0 +1,9 @@
+.idea
+/*.iml
+/coverage
+/demo/dist
+/es
+/lib
+/node_modules
+/umd
+npm-debug.log*
