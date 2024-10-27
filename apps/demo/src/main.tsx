@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useMemo } from 'react'
+import { invertBase16Theme } from 'react-base16-styling'
 import { createRoot } from 'react-dom/client'
 import { OrderedMap, Seq } from 'immutable'
 import { ImmutableEditor, themeMaterial } from 'react-immutable-editor'
@@ -40,19 +41,27 @@ const Demo = () => {
     // some state is needed somewhere
     const [data, setData] = React.useState(demoData)
 
+    // dark theme, for a default light theme swap the negation at invertTheme
+    const theme = themeMaterial
+    const invertTheme = !data.get('darkTheme')
+    const appliedTheme = useMemo(
+        () => invertTheme && theme ? invertBase16Theme(theme) : theme,
+        [invertTheme, theme],
+    )
+
     return <div style={{
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
         height: '100vh', padding: 24,
-        background: data.get('darkTheme') ? themeMaterial.base00 : themeMaterial.base06,
+        background: appliedTheme.base00,
     }}>
 
-        {data.get('hideIntro') ? null : <DemoIntro data={data} theme={themeMaterial}/>}
+        {data.get('hideIntro') ? null : <DemoIntro theme={appliedTheme}/>}
 
         {/* initiating the editor and use the immutable in the state */}
         <ImmutableEditor
-            theme={themeMaterial}
+            theme={theme}
             invertTheme={!data.get('darkTheme')}
 
             data={data}
@@ -71,24 +80,26 @@ const Demo = () => {
 }
 
 // Just the demo intro, no logic
-const DemoIntro = ({data, theme}) => <React.Fragment>
-    <h1 style={{
-        color: data.get('darkTheme') ? theme.base0D : theme.base00,
-        fontFamily: 'sans-serif',
-    }}>react-immutable-editor</h1>
-    <p style={{
-        color: data.get('darkTheme') ? theme.base0D : theme.base00,
-        fontFamily: 'sans-serif',
-    }}>
-        An editor for <a style={{color: data.get('darkTheme') ? theme.base04 : theme.base0D}} href="https://immutable-js.github.io/immutable-js/docs/#/" target={'_blank'} rel="noreferrer">immutable</a> maps in React. Check: <b>hideIntro</b>, <b>hideIntro</b>, <b>darkTheme</b>.
-    </p>
-    <p style={{
-        color: data.get('darkTheme') ? theme.base0D : theme.base00,
-        fontFamily: 'sans-serif',
-    }}>
-        See <a style={{color: data.get('darkTheme') ? theme.base04 : theme.base0D}} href="https://github.com/elbakerino/react-immutable-editor/blob/main/demo/src/main.ts" target={'_blank'} rel="noreferrer">demo file</a> for the code.
-    </p>
-</React.Fragment>
+const DemoIntro = ({theme}) => {
+    return <React.Fragment>
+        <h1 style={{
+            color: theme.base0D,
+            fontFamily: 'sans-serif',
+        }}>react-immutable-editor</h1>
+        <p style={{
+            color: theme.base0D,
+            fontFamily: 'sans-serif',
+        }}>
+            An editor for <a style={{color: theme.base04}} href="https://immutable-js.github.io/immutable-js/docs/#/" target={'_blank'} rel="noreferrer">immutable</a> maps in React. Check: <b>hideIntro</b>, <b>logChange</b>, <b>darkTheme</b>.
+        </p>
+        <p style={{
+            color: theme.base0D,
+            fontFamily: 'sans-serif',
+        }}>
+            See the <a style={{color: theme.base04}} href="https://github.com/elbakerino/react-immutable-editor/blob/main/demo/src/main.ts" target={'_blank'} rel="noreferrer">demo file</a> for the source code.
+        </p>
+    </React.Fragment>
+}
 
 createRoot(document.getElementById('root')!).render(
     <React.StrictMode>

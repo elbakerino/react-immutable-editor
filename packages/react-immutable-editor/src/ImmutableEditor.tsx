@@ -1,12 +1,27 @@
-import { useState, useRef, useEffect, Fragment, ReactNode } from 'react'
+import { useState, useRef, useEffect, ReactNode, useMemo, CSSProperties } from 'react'
 import type { Base16Theme } from 'react-base16-styling'
+import { invertBase16Theme } from 'react-base16-styling'
 import { JSONTree } from 'react-json-tree'
+import type { KeyPath } from 'react-json-tree'
 
 const IterableLabel = ({parentKey}) => {
     return <span>{[...parentKey].reverse().pop()}</span>
 }
 
-const ButtonInputLabel = ({theme, type, parentKey, getValue, onChange, invertTheme}) => {
+interface ButtonLabelProps {
+    theme?: Base16Theme
+    parentKey: KeyPath
+    type: string
+    onChange?: (keys: (string | number)[], value: any) => void
+    getValue: (keys: (string | number)[]) => unknown
+    iconCode?: ReactNode
+}
+
+const ButtonInputLabel = (
+    {
+        theme, type, parentKey, getValue, onChange,
+    }: ButtonLabelProps,
+) => {
     const [showType, setShow] = useState(false)
     const [multiline, setMultiline] = useState(false)
     const spanRef = useRef<HTMLSpanElement>(null)
@@ -14,7 +29,7 @@ const ButtonInputLabel = ({theme, type, parentKey, getValue, onChange, invertThe
     const relKeys = [...parentKey]
     relKeys.pop()
     relKeys.reverse()
-    const multi = getValue && type === 'String' && -1 !== getValue(relKeys).indexOf('\n')
+    const multi = getValue && type === 'String' && -1 !== (getValue(relKeys) as string).indexOf('\n')
     const ownKey = [...parentKey].reverse().pop()
 
     useEffect(() => {
@@ -59,8 +74,8 @@ const ButtonInputLabel = ({theme, type, parentKey, getValue, onChange, invertThe
         {showType && getValue ?
             <Comp
                 type={'Boolean' === type ? 'checkbox' : ('Number' === type ? 'number' : 'text')}
-                value={getValue(relKeys)}
-                checked={'Boolean' === type ? getValue(relKeys) : undefined}
+                value={'Boolean' === type ? undefined : getValue(relKeys) as string | number}
+                checked={'Boolean' === type ? getValue(relKeys) as boolean : undefined}
                 disabled={!onChange}
                 style={{
                     position: 'absolute',
@@ -68,11 +83,10 @@ const ButtonInputLabel = ({theme, type, parentKey, getValue, onChange, invertThe
                     wordBreak: 'keep-all',
                     left: '100%',
                     top: 'Boolean' === type ? -3 : -4,
-                    background: (invertTheme ? theme?.base07 : theme?.base00),
-                    // type is here to be material-ui dark-style compatible (which works other then inverting colors)
-                    border: '1px solid ' + (theme?.type === 'dark' || !invertTheme ? theme?.base06 : theme?.base02),
+                    background: theme?.base00,
+                    border: theme?.base02 ? '1px solid ' + theme?.base02 : undefined,
                     borderRadius: 3,
-                    color: (invertTheme ? theme?.base03 : theme?.base0B),
+                    color: theme?.base0B,
                     padding: '2px 6px',
                 }}
                 // hiding on ESC or ENTER
@@ -125,21 +139,40 @@ export interface EditorProps {
     onChange?: (keys: (string | number)[], value: any) => void
     getVal: (keys: (string | number)[]) => unknown
     iconCode?: ReactNode
+    className?: string
+    style?: CSSProperties
 }
 
 export function ImmutableEditor(props: EditorProps) {
-    const {theme, invertTheme = false, data, onChange, getVal, iconCode} = props
+    const {
+        theme, invertTheme = false,
+        data, onChange, getVal,
+        iconCode,
+        className, style,
+    } = props
     const [showRaw, setShowRaw] = useState(false)
 
-    return <Fragment>
+    const appliedTheme = useMemo(
+        () => invertTheme && theme ? invertBase16Theme(theme) : theme,
+        [invertTheme, theme],
+    )
+
+    return <div
+        className={className}
+        style={{
+            ...style,
+            background: appliedTheme?.base00,
+        }}
+    >
         <button
             style={{
                 background: 'transparent', display: 'block',
                 border: 0,
                 marginBottom: '-0.5em',
-                cursor: 'pointer', marginLeft: -8, paddingLeft: 1,
-                color: theme?.base0B,
+                cursor: 'pointer', paddingLeft: 1,
+                color: appliedTheme?.base0B,
                 textAlign: 'left',
+                width: '100%',
             }}
             onClick={() => setShowRaw(!showRaw)}
         >
@@ -147,8 +180,9 @@ export function ImmutableEditor(props: EditorProps) {
         </button>
         {showRaw ?
             data && typeof data.toJS === 'function' ?
-                <code style={{background: 'transparent', display: 'block', border: 0, width: '100%', color: theme?.base0D}}>
+                <code style={{background: 'transparent', display: 'block', border: 0, width: '100%', color: appliedTheme?.base0D, margin: '0.5em 0'}}>
                     <pre
+                        style={{margin: 0}}
                         contentEditable
                         suppressContentEditableWarning
                         // only allow copy of content with `ctrl+a` but prohibit any change
@@ -161,10 +195,10 @@ export function ImmutableEditor(props: EditorProps) {
                 valueRenderer={raw => <ButtonValue raw={raw}/>}
                 labelRenderer={(parentKeys, type) => {
                     if(type === 'Iterable') return <IterableLabel parentKey={parentKeys}/>
-                    return <ButtonInputLabel type={type} parentKey={parentKeys} onChange={onChange} getValue={getVal} theme={theme} invertTheme={invertTheme}/>
+                    return <ButtonInputLabel type={type} parentKey={parentKeys} onChange={onChange} getValue={getVal} theme={appliedTheme}/>
                 }}
                 theme={theme}
                 invertTheme={invertTheme}
             />}
-    </Fragment>
+    </div>
 }

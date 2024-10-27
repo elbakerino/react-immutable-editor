@@ -1,14 +1,16 @@
 {
     "name": "react-immutable-editor",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "description": "dev-tool: editor for immutable in react",
     "type": "module",
+    "types": "./src/index.d.ts",
     "exports": {
         ".": {
-            "import": "./src/index.js",
-            "types": "./src/index.d.ts"
+            "types": "./src/index.d.ts",
+            "import": "./src/index.js"
         }
     },
+    "sideEffects": false,
     "dependencies": {
         "react-json-tree": "~0.19.0"
     },

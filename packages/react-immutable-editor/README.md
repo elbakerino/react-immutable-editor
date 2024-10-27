@@ -52,8 +52,6 @@ Adding and deleting existing entries is currently not implemented.
 
 Changing object properties (not the values) isn't implemented yet.
 
-Styling currently doesn't handle invert correctly inside the editor added parts, it switches color values instead of inverting them.
-
 ## License
 
 This project is free software distributed under the **MIT License**.
