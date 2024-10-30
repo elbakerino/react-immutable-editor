@@ -3,7 +3,7 @@
     "compilerOptions": {
         "declaration": true,
         "noEmit": false,
-        "outDir": "dist/react-immutable-editor/src"
+        "outDir": "dist"
     },
     "include": [
         "packages"
