@@ -1,6 +1,6 @@
 {
     "name": "react-immutable-editor",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "description": "dev-tool: editor for immutable in react",
     "type": "module",
     "types": "./src/index.d.ts",
